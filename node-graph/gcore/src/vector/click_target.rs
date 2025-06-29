@@ -67,13 +67,14 @@ impl ClickTarget {
 		self.bounding_box
 	}
 
-	pub fn to_dom_rect(&self) -> Option<(f64, f64, f64, f64)> {
+	/// In the order (x, y, width, height)
+	pub fn to_rect(&self) -> Option<(f64, f64, f64, f64)> {
 		self.bounding_box.map(|bbox| {
-			let a = bbox[0].x;
-			let b = bbox[0].y;
-			let c = bbox[1].x;
-			let d = bbox[1].y;
-			(a, b, c - a, d - b)
+			let x1 = bbox[0].x;
+			let y1 = bbox[0].y;
+			let x2 = bbox[1].x;
+			let y2 = bbox[1].y;
+			(x1, y1, x2 - x1, y2 - y1)
 		})
 	}
 

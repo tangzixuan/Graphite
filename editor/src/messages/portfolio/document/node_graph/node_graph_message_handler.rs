@@ -12,7 +12,7 @@ use crate::messages::portfolio::document::utility_types::misc::GroupFolderType;
 use crate::messages::portfolio::document::utility_types::network_interface::{
 	self, InputConnector, NodeNetworkInterface, NodeTemplate, NodeTypePersistentMetadata, OutputConnector, Previewing, TypeSource,
 };
-use crate::messages::portfolio::document::utility_types::nodes::{CollapsedLayers, LayerPanelEntry, WirePath, WireUpdate};
+use crate::messages::portfolio::document::utility_types::nodes::{CollapsedLayers, LayerPanelEntry, WirePath, WireUpdate, build_wire_path};
 use crate::messages::prelude::*;
 use crate::messages::tool::common_functionality::auto_panning::AutoPanning;
 use crate::messages::tool::common_functionality::graph_modification_utils::get_clip_mode;
@@ -913,12 +913,7 @@ impl<'a> MessageHandler<NodeGraphMessage, NodeGraphHandlerData<'a>> for NodeGrap
 							}
 						});
 						let wire_path = WirePath {
-							path_string: crate::messages::portfolio::document::utility_types::nodes::build_wire_path(
-								wire_in_progress_from_connector,
-								wire_in_progress_to_connector,
-								from_connector_is_layer,
-								to_connector_is_layer,
-							),
+							path_string: build_wire_path(wire_in_progress_from_connector, wire_in_progress_to_connector, from_connector_is_layer, to_connector_is_layer),
 							data_type: self.wire_in_progress_type,
 							thick: false,
 							dashed: false,
@@ -1379,7 +1374,7 @@ impl<'a> MessageHandler<NodeGraphMessage, NodeGraphHandlerData<'a>> for NodeGrap
 				let document_bbox = viewport_bbox.map(|p| network_metadata.persistent_metadata.navigation_metadata.node_graph_to_viewport.inverse().transform_point2(p));
 				self.current_nodes = Vec::new();
 				for node_id in &self.all_nodes {
-					let Some(node_bbox) = network_interface.node_bounding_box(&node_id, breadcrumb_network_path) else {
+					let Some(node_bbox) = network_interface.node_bounding_box(node_id, breadcrumb_network_path) else {
 						log::error!("Could not get bbox for node: {:?}", node_id);
 						continue;
 					};

@@ -1,7 +1,6 @@
-use crate::messages::portfolio::document::node_graph::utility_types::FrontendGraphDataType;
-
 use super::document_metadata::{DocumentMetadata, LayerNodeIdentifier};
 use super::network_interface::NodeNetworkInterface;
+use crate::messages::portfolio::document::node_graph::utility_types::FrontendGraphDataType;
 use glam::DVec2;
 use graph_craft::document::{NodeId, NodeNetwork};
 use serde::ser::SerializeStruct;
@@ -194,7 +193,7 @@ pub fn build_wire_path(output_position: DVec2, input_position: DVec2, vertical_o
 	let horizontal_curve = horizontal_curve_amount * curve_length;
 	let vertical_curve = vertical_curve_amount * curve_length;
 
-	let locations = vec![
+	let locations = [
 		output_position,
 		DVec2::new(
 			if vertical_out { output_position.x } else { output_position.x + horizontal_curve },

@@ -161,8 +161,9 @@ pub fn document_migration_upgrades(document: &mut DocumentMessageHandler, reset_
 		.network_interface
 		.document_network()
 		.recursive_nodes()
-		.map(|(node_id, node, path)| (node_id.clone(), node.clone(), path))
+		.map(|(node_id, node, path)| (*node_id, node.clone(), path))
 		.collect::<Vec<(NodeId, graph_craft::document::DocumentNode, Vec<NodeId>)>>();
+
 	for (node_id, node, network_path) in &nodes {
 		if reset_node_definitions_on_open {
 			if let Some(Some(reference)) = document.network_interface.reference(node_id, network_path) {

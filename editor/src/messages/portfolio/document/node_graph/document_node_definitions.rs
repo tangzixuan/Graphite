@@ -1939,7 +1939,7 @@ fn static_nodes() -> Vec<DocumentNodeDefinition> {
 					}),
 					input_metadata: vec![
 						("Vector Data", "The shape to be resampled and converted into a polyline.").into(),
-						(("Spacing", node_properties::SAMPLE_POLYLINE_TOOLTIP_SPACING)).into(),
+						("Spacing", node_properties::SAMPLE_POLYLINE_TOOLTIP_SPACING).into(),
 						InputMetadata::with_name_description_override(
 							"Separation",
 							node_properties::SAMPLE_POLYLINE_TOOLTIP_SEPARATION,

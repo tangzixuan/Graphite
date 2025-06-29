@@ -7,7 +7,6 @@ import {
 	type FrontendClickTargets,
 	type ContextMenuInformation,
 	type FrontendNode,
-	type FrontendNodeWire as FrontendNodeWire,
 	type FrontendNodeType,
 	type WirePath,
 	SendUIMetadata,
@@ -44,8 +43,7 @@ export function createNodeGraphState(editor: Editor) {
 		addExport: undefined as { x: number; y: number } | undefined,
 		nodes: new Map<bigint, FrontendNode>(),
 		visibleNodes: new Set<bigint>(),
-		// The index is the exposed input index
-		// The exports have a first key value of u32::MAX
+		/// The index is the exposed input index. The exports have a first key value of u32::MAX.
 		wires: new Map<bigint, Map<number, WirePath>>(),
 		wiresDirectNotGridAligned: false,
 		wirePathInProgress: undefined as WirePath | undefined,
@@ -131,7 +129,6 @@ export function createNodeGraphState(editor: Editor) {
 	});
 	editor.subscriptions.subscribeJsMessage(UpdateVisibleNodes, (updateVisibleNodes) => {
 		update((state) => {
-			console.log(updateVisibleNodes.nodes);
 			state.visibleNodes = new Set<bigint>(updateVisibleNodes.nodes);
 			return state;
 		});
@@ -149,7 +146,6 @@ export function createNodeGraphState(editor: Editor) {
 					inputMap.set(wireUpdate.inputIndex, wireUpdate.wirePathUpdate);
 				}
 			});
-			// console.log(updateNodeWires.wires);
 			state.wiresDirectNotGridAligned = updateNodeWires.wiresDirectNotGridAligned;
 			return state;
 		});
